@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using IjwFramework.Types;
 using System.Xml;
-using Ijw.Math;
+using IjwFramework.Types;
 
 namespace Ijw.Skeletal
 {
