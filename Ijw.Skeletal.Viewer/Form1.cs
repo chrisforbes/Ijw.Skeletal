@@ -97,7 +97,7 @@ namespace Ijw.Skeletal.Viewer
 				new Vector3( 6 * (float)Math.Sin(t), 6, 6 * (float)Math.Cos(t) ), 
 				new Vector3( 0, 3, 0 ), 
 				Vector3.UnitY );
-			var proj = Matrix.Perspective( (float)Math.PI / 2, ClientSize.Width / ClientSize.Height,
+			var proj = Matrix.Perspective( (float)Math.PI / 2, (float)ClientSize.Width / ClientSize.Height,
 				0.01f, 1000.0f );
 
 			shader.SetValue("viewProjMatrix", view * proj);
