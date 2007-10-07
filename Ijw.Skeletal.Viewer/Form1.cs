@@ -67,7 +67,7 @@ namespace Ijw.Skeletal.Viewer
 
 			skeleton = new Skeleton(coreSkeleton);
 
-			mixer.Play(animations["walk"]).Looping();
+			mixer.Play(animations["walk"]).Looping().WithWeight(0.3f);
 			mixer.Play(animations["aim"]).Looping();
 		}
 
@@ -109,7 +109,12 @@ namespace Ijw.Skeletal.Viewer
 				new Pair<string,string>( "p90", "p90-template.tga" )
 			};
 
-			foreach (var m in mm.Select(x => new { Mesh = meshes[x.First], Texture = textures[x.Second] } ))
+			foreach (var m in mm.Select(x => 
+				new 
+				{ 
+					Mesh = meshes[x.First], 
+					Texture = textures[x.Second] 
+				} ))
 			{
 				var v = m.Mesh.GetTransformedVertices(skeleton);
 				var i = m.Mesh.GetIndices();

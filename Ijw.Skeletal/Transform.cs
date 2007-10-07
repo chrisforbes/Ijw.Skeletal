@@ -36,7 +36,7 @@ namespace Ijw.Skeletal
 			{
 				if (w == 0)
 				{
-					result = i.Second;
+					result = Transform.Blend(i.First, reference, i.Second);
 					w = i.First;
 				}
 				else
