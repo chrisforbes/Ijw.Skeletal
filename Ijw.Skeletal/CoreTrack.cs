@@ -8,18 +8,19 @@ namespace Ijw.Skeletal
 	public class CoreTrack
 	{
 		readonly CoreBone bone;
-		readonly List<Pair<float, Transform>> keys = new List<Pair<float, Transform>>();
+		readonly List<Pair<float, Transform>> keys;
 
 		public CoreTrack(XmlElement e, CoreSkeleton skeleton)
 		{
 			int boneId = int.Parse(e.GetAttribute("BONEID"));
 			bone = skeleton.GetBone(boneId);
 
-			foreach (XmlElement f in e.SelectNodes("./KEYFRAME"))
-				keys.Add(new Pair<float, Transform>(float.Parse(f.GetAttribute("TIME")),
-				new Transform(
-					Util.ReadQuaternion(f.SelectSingleNode("./ROTATION")),
-					Util.ReadVector(f.SelectSingleNode("./TRANSLATION")))));
+			keys = e.SelectElements("./KEYFRAME").Select(
+				x => new Pair<float, Transform>(
+					float.Parse(x.GetAttribute("TIME")),
+					new Transform(
+						Util.ReadQuaternion(x.SelectSingleNode("./ROTATION")),
+						Util.ReadVector3(x.SelectSingleNode("./TRANSLATION"))))).ToList();
 		}
 
 		public CoreBone Bone { get { return bone; } }

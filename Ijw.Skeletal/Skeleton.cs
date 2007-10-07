@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ijw.Math;
 
 namespace Ijw.Skeletal
 {
 	public class Skeleton
 	{
 		readonly CoreSkeleton coreSkeleton;
-		readonly Dictionary<CoreBone, Bone> bones = new Dictionary<CoreBone, Bone>();
+		readonly Dictionary<CoreBone, Bone> bones;
 
 		public Skeleton(CoreSkeleton coreSkeleton)
 		{
 			this.coreSkeleton = coreSkeleton;
-			foreach (var coreBone in coreSkeleton.Bones)
-				bones.Add(coreBone, new Bone(coreBone, this));
+
+			bones = coreSkeleton.Bones.Select(x => new Bone(x, this)).
+				ToDictionary(x => x.CoreBone);
 		}
 
 		internal Bone GetBone(CoreBone bone)
@@ -47,5 +49,10 @@ namespace Ijw.Skeletal
 					influences);
 			});
 		}
+
+		public IEnumerable<Bone> Bones { get { return bones.Values; } }
+
+		public IEnumerable<Vector3> GetBoneLines() { return Bones.SelectMany(x => x.AsLine()); }
+		public IEnumerable<Vector3> GetBonePoints() { return Bones.Select(x => x.Position); }
 	}
 }

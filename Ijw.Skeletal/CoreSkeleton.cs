@@ -6,15 +6,15 @@ namespace Ijw.Skeletal
 {
 	public class CoreSkeleton
 	{
-		List<CoreBone> bones = new List<CoreBone>();
+		readonly List<CoreBone> bones;
 
 		public CoreSkeleton(string filename)
 		{
 			var doc = new XmlDocument();
 			doc.Load(filename);
 
-			foreach (XmlElement e in doc.SelectNodes("/SKELETON/BONE"))
-				bones.Add(new CoreBone(e, GetBone));
+			bones = doc.SelectElements("//BONE").Select(
+				x => new CoreBone(x, this)).ToList();
 		}
 
 		public int NumBones { get { return bones.Count; } }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Ijw.Math;
+using System;
 
 namespace Ijw.Skeletal
 {
@@ -11,7 +12,7 @@ namespace Ijw.Skeletal
 
 		Transform transform;
 		Transform absTransform;
-		Matrix matrix;
+		Matrix matrix = Matrix.Identity;
 
 		public Bone(CoreBone coreBone, Skeleton skeleton)
 		{
@@ -44,13 +45,27 @@ namespace Ijw.Skeletal
 			{
 				transform = value;
 
-				if (Parent == null)
-					absTransform = transform;
-				else
-					absTransform = transform * Parent.absTransform;
+				absTransform = (Parent == null) 
+					? transform 
+					: transform * Parent.absTransform;
 
-				matrix = (CoreBone.BoneSpace * absTransform).ToMatrix();
+				matrix = Matrix.Identity;
+
+				//matrix = (CoreBone.BoneSpace * absTransform).ToMatrix();
 			}
 		}
+
+		public Matrix Matrix { get { return matrix; } }
+
+		public IEnumerable<Vector3> AsLine()
+		{
+			yield return absTransform.translation;
+
+			yield return (Parent == null)
+				? Parent.absTransform.translation
+				: Vector3.Zero;
+		}
+
+		public Vector3 Position { get { return absTransform.translation; } }
 	}
 }

@@ -9,7 +9,7 @@ namespace Ijw.Skeletal
 	{
 		readonly CoreAnimation coreAnimation;
 		float time;
-		float weight;
+		float weight = 1;
 		bool looping;
 		Action completedCallbacks;
 
@@ -42,13 +42,11 @@ namespace Ijw.Skeletal
 		public Influence? TransformFor(Bone b)
 		{
 			var track = coreAnimation.GetTrack(b.CoreBone);
-			if (track == null || weight <= 0)
-				return null;
 
-			return new Influence(weight, track.GetTransformAt(time));
+			return (track != null && weight > 0)
+				? new Influence(weight, track.GetTransformAt(time))
+				: default(Influence?);
 		}
-
-		// cool fluent interface
 
 		public Animation Looping() { looping = true; return this; }
 		public Animation Once() { looping = false; return this; }

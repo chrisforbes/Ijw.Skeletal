@@ -1,32 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using IjwFramework.Types;
 
 namespace Ijw.Skeletal
 {
 	public class CoreBone
 	{
-		readonly CoreBone parent;
+		readonly int parentId;
 		readonly string name;
 
 		readonly Transform boneSpace;
 		readonly Transform transform;
 
+		readonly CoreSkeleton skeleton;
+
+		readonly Lazy<CoreBone> parent;
+
 		List<CoreBone> children = new List<CoreBone>();
 
-		internal CoreBone(XmlElement e, Func<int, CoreBone> boneLookup)
+		internal CoreBone(XmlElement e, CoreSkeleton skeleton)
 		{
-			int parentId = int.Parse(e.SelectSingleNode("./PARENTID").InnerText);
-			parent = boneLookup(parentId);
+			parentId = int.Parse(e.SelectSingleNode("./PARENTID").InnerText);
 
 			name = e.GetAttribute("NAME");
 			boneSpace = new Transform(
 				Util.ReadQuaternion(e.SelectSingleNode("./ROTATION")),
-				Util.ReadVector(e.SelectSingleNode("./TRANSLATION")));
+				Util.ReadVector3(e.SelectSingleNode("./TRANSLATION")));
 
 			transform = new Transform(
 				Util.ReadQuaternion(e.SelectSingleNode("./LOCALROTATION")),
-				Util.ReadVector(e.SelectSingleNode("./LOCALTRANSLATION")));
+				Util.ReadVector3(e.SelectSingleNode("./LOCALTRANSLATION")));
+
+			this.skeleton = skeleton;
+
+			parent = Lazy.New(() => 
+			{ 
+				var bone = skeleton.GetBone(parentId); 
+				if (bone != null)
+					bone.AddChild(this);
+				return bone;
+			});
 		}
 
 		internal void AddChild(CoreBone bone)
@@ -35,7 +49,9 @@ namespace Ijw.Skeletal
 		}
 
 		public string Name { get { return name; } }
-		public CoreBone Parent { get { return parent; } }
+
+		public CoreBone Parent { get { return parent.Value; } }
+
 		public IEnumerable<CoreBone> Children { get { return children; } }
 
 		public Transform Transform { get { return transform; } }

@@ -7,7 +7,7 @@ namespace Ijw.Skeletal
 	public class CoreAnimation
 	{
 		readonly float duration;
-		readonly List<CoreTrack> tracks = new List<CoreTrack>();
+		readonly List<CoreTrack> tracks;
 
 		public float Duration { get { return duration; } }
 
@@ -17,6 +17,9 @@ namespace Ijw.Skeletal
 			doc.Load(filename);
 
 			duration = float.Parse(doc.SelectSingleNode("/ANIMATION/@DURATION").Value);
+
+			tracks = doc.SelectElements("//TRACK").Select(
+				e => new CoreTrack(e, skeleton)).ToList();
 		}
 
 		public CoreTrack GetTrack(CoreBone bone)

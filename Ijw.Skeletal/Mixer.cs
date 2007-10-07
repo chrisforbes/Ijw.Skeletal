@@ -12,8 +12,8 @@ namespace Ijw.Skeletal
 
 		public Animation Play(CoreAnimation coreAnimation)
 		{
+			Stop(coreAnimation);
 			var anim = new Animation(coreAnimation);
-			animations.RemoveAll(x => x.CoreAnimation == coreAnimation);
 			animations.Add(anim);
 			return anim;
 		}

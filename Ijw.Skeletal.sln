@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ijw.Skeletal", "Ijw.Skeleta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ijw.Skeletal.Tests", "Ijw.Skeletal.Tests\Ijw.Skeletal.Tests.csproj", "{455213F6-AB64-47AD-B565-62F78AC0A39F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ijw.Skeletal.Viewer", "Ijw.Skeletal.Viewer\Ijw.Skeletal.Viewer.csproj", "{23C40366-32ED-4E91-8291-372A95DFC850}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{455213F6-AB64-47AD-B565-62F78AC0A39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{455213F6-AB64-47AD-B565-62F78AC0A39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{455213F6-AB64-47AD-B565-62F78AC0A39F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C40366-32ED-4E91-8291-372A95DFC850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C40366-32ED-4E91-8291-372A95DFC850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C40366-32ED-4E91-8291-372A95DFC850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C40366-32ED-4E91-8291-372A95DFC850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
