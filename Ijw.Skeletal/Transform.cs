@@ -70,19 +70,18 @@ namespace Ijw.Skeletal
 
 			Matrix m;
 			m.M11 = 1 - yy2 - zz2;
-			m.M12 = xy2 + zw2;
-			m.M13 = xz2 - yw2;
-			m.M14 = 0;
+			m.M21 = xy2 + zw2;
+			m.M31 = xz2 - yw2;
 
-			m.M21 = xy2 - zw2;
+			m.M12 = xy2 - zw2;
 			m.M22 = 1 - xx2 - zz2;
-			m.M23 = yz2 + xw2;
-			m.M24 = 0;
+			m.M32 = yz2 + xw2;
 
-			m.M31 = xz2 + yw2;
-			m.M32 = yz2 - xw2;
+			m.M13 = xz2 + yw2;
+			m.M23 = yz2 - xw2;
 			m.M33 = 1 - xx2 - yy2;
-			m.M34 = 0;
+
+			m.M14 = m.M24 = m.M34 = 0;
 
 			m.M41 = translation.x;
 			m.M42 = translation.y;

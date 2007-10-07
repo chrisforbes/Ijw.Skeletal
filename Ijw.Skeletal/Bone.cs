@@ -45,15 +45,11 @@ namespace Ijw.Skeletal
 			{
 				transform = value;
 
-				absTransform = (Parent == null) 
-					? transform 
-					: transform * Parent.absTransform;
+				absTransform = (Parent == null)
+					? transform
+					: (transform * Parent.absTransform);
 
-				//matrix = Matrix.Identity;
-
-				var bsMatrix = CoreBone.BoneSpace.ToMatrix();
-
-				matrix = bsMatrix * absTransform.ToMatrix();// matrix = (absTransform * CoreBone.BoneSpace).ToMatrix();
+				matrix = CoreBone.BoneSpace.ToMatrix() * absTransform.ToMatrix();
 			}
 		}
 
