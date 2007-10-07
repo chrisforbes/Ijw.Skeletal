@@ -61,7 +61,7 @@ namespace Ijw.Skeletal
 		{
 			yield return absTransform.translation;
 
-			yield return (Parent == null)
+			yield return (Parent != null)
 				? Parent.absTransform.translation
 				: Vector3.Zero;
 		}

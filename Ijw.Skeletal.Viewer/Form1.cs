@@ -10,17 +10,18 @@ using Ijw.DirectX;
 using System.IO;
 using IjwFramework.Collections;
 using Ijw.Math;
+using IjwFramework.Types;
 
 namespace Ijw.Skeletal.Viewer
 {
 	using Math = System.Math;
-	using IjwFramework.Types;
 
 	public class Form1 : Form
 	{
-		
 		GraphicsDevice device;
 		Shader shader;
+		Shader wireframe;
+		Shader points;
 
 		CoreSkeleton coreSkeleton = new CoreSkeleton("../../../res/skeleton.xsf");
 		Cache<string, CoreMesh> meshes;
@@ -28,6 +29,7 @@ namespace Ijw.Skeletal.Viewer
 		Cache<string, Texture> textures;
 
 		FvfVertexBuffer<Vertex> vertices;
+		FvfVertexBuffer<Vector3> haxVerts;
 		IndexBuffer indices;
 
 		Mixer mixer = new Mixer();
@@ -43,6 +45,8 @@ namespace Ijw.Skeletal.Viewer
 				Surfaces.Color | Surfaces.Depth);
 
 			shader = new Shader(device, File.OpenRead("../../../res/shader.fx"));
+			wireframe = new Shader(device, File.OpenRead("../../../res/wire.fx"));
+			points = new Shader(device, File.OpenRead("../../../res/point.fx"));
 
 			meshes = new Cache<string,CoreMesh>(
 				x => new CoreMesh("../../../res/" + x + ".xmf", coreSkeleton ));
@@ -52,6 +56,10 @@ namespace Ijw.Skeletal.Viewer
 
 			vertices = new FvfVertexBuffer<Vertex>(device, 1024,
 				VertexFormat.Position | VertexFormat.Normal | VertexFormat.Texture);
+
+			haxVerts = new FvfVertexBuffer<Vector3>(device, 1024,
+				VertexFormat.Position);
+
 			indices = new IndexBuffer(device, 1024);
 
 			textures = new Cache<string, Texture>(
@@ -82,7 +90,7 @@ namespace Ijw.Skeletal.Viewer
 			skeleton.Animate(mixer);
 
 			device.Begin();
-			device.Clear(Color.Red.ToArgb(), Surfaces.Color | Surfaces.Depth);
+			device.Clear(Color.Blue.ToArgb(), Surfaces.Color | Surfaces.Depth);
 
 			var view = Matrix.LookAt( 
 				new Vector3( 10 * (float)Math.Sin(t), 10, 10 * (float)Math.Cos(t) ), 
@@ -102,7 +110,6 @@ namespace Ijw.Skeletal.Viewer
 
 			foreach (var m in mm.Select(x => new { Mesh = meshes[x.First], Texture = textures[x.Second] } ))
 			{
-
 				var v = m.Mesh.GetTransformedVertices(skeleton);
 				var i = m.Mesh.GetIndices();
 
@@ -117,6 +124,20 @@ namespace Ijw.Skeletal.Viewer
 				shader.Render(() =>
 					device.DrawIndexedPrimitives(PrimitiveType.TriangleList, v.Length, i.Length / 3));
 			}
+
+			var verts = skeleton.GetBoneLines().ToArray();
+			haxVerts.SetData(verts);
+			haxVerts.Bind(0);
+
+			wireframe.Render(() =>
+				device.DrawPrimitives(PrimitiveType.LineList, verts.Length / 2));
+
+			verts = skeleton.GetBonePoints().ToArray();
+			haxVerts.SetData(verts);
+			haxVerts.Bind(0);
+
+			points.Render(() =>
+				device.DrawPrimitives(PrimitiveType.PointList, verts.Length));
 
 			device.End();
 			device.Present();
