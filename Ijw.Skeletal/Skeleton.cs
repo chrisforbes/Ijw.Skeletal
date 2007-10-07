@@ -45,6 +45,7 @@ namespace Ijw.Skeletal
 			VisitBones(x =>
 			{
 				var influences = mixer.GetInfluencesFor(x);
+				//x.Transform = x.CoreBone.Transform;
 				x.Transform = Transform.BlendMany(x.CoreBone.Transform,
 					influences);
 			});

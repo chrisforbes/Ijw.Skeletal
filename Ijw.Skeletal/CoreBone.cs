@@ -25,12 +25,12 @@ namespace Ijw.Skeletal
 
 			name = e.GetAttribute("NAME");
 			boneSpace = new Transform(
-				Util.ReadQuaternion(e.SelectSingleNode("./ROTATION")),
-				Util.ReadVector3(e.SelectSingleNode("./TRANSLATION")));
-
-			transform = new Transform(
 				Util.ReadQuaternion(e.SelectSingleNode("./LOCALROTATION")),
 				Util.ReadVector3(e.SelectSingleNode("./LOCALTRANSLATION")));
+
+			transform = new Transform(
+				Util.ReadQuaternion(e.SelectSingleNode("./ROTATION")),
+				Util.ReadVector3(e.SelectSingleNode("./TRANSLATION")));
 
 			this.skeleton = skeleton;
 

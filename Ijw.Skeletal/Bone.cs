@@ -49,9 +49,11 @@ namespace Ijw.Skeletal
 					? transform 
 					: transform * Parent.absTransform;
 
-				matrix = Matrix.Identity;
+				//matrix = Matrix.Identity;
 
-				//matrix = (CoreBone.BoneSpace * absTransform).ToMatrix();
+				var bsMatrix = CoreBone.BoneSpace.ToMatrix();
+
+				matrix = bsMatrix * absTransform.ToMatrix();// matrix = (absTransform * CoreBone.BoneSpace).ToMatrix();
 			}
 		}
 

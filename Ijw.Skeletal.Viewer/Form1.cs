@@ -67,6 +67,7 @@ namespace Ijw.Skeletal.Viewer
 
 			skeleton = new Skeleton(coreSkeleton);
 
+			mixer.Play(animations["walk"]).Looping();
 			mixer.Play(animations["aim"]).Looping();
 		}
 
@@ -93,7 +94,7 @@ namespace Ijw.Skeletal.Viewer
 			device.Clear(Color.Blue.ToArgb(), Surfaces.Color | Surfaces.Depth);
 
 			var view = Matrix.LookAt( 
-				new Vector3( 10 * (float)Math.Sin(t), 10, 10 * (float)Math.Cos(t) ), 
+				new Vector3( 6 * (float)Math.Sin(t), 6, 6 * (float)Math.Cos(t) ), 
 				new Vector3( 0, 3, 0 ), 
 				Vector3.UnitY );
 			var proj = Matrix.Perspective( (float)Math.PI / 2, ClientSize.Width / ClientSize.Height,
