@@ -68,26 +68,11 @@ namespace Ijw.Skeletal
 			float yz2 = rotation.y * rotation.z * 2;
 			float xw2 = rotation.x * rotation.w * 2;
 
-			Matrix m;
-			m.M11 = 1 - yy2 - zz2;
-			m.M21 = xy2 + zw2;
-			m.M31 = xz2 - yw2;
-
-			m.M12 = xy2 - zw2;
-			m.M22 = 1 - xx2 - zz2;
-			m.M32 = yz2 + xw2;
-
-			m.M13 = xz2 + yw2;
-			m.M23 = yz2 - xw2;
-			m.M33 = 1 - xx2 - yy2;
-
-			m.M14 = m.M24 = m.M34 = 0;
-
-			m.M41 = translation.x;
-			m.M42 = translation.y;
-			m.M43 = translation.z;
-			m.M44 = 1;
-			return m;
+			return new Matrix(
+				1 - yy2 - zz2, xy2 - zw2, xz2 + yw2, 0,
+				xy2 + zw2, 1 - xx2 - zz2, yz2 - xw2, 0,
+				xz2 - yw2, yz2 + xw2, 1 - xx2 - yy2, 0,
+				translation.x, translation.y, translation.z, 1 );
 		}
 	}
 }
