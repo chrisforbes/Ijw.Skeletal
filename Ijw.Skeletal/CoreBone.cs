@@ -5,7 +5,7 @@ using IjwFramework.Types;
 
 namespace Ijw.Skeletal
 {
-	public class CoreBone
+	class CoreBone
 	{
 		readonly int parentId;
 		readonly string name;

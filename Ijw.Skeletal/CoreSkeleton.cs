@@ -17,18 +17,16 @@ namespace Ijw.Skeletal
 				x => new CoreBone(x, this)).ToList();
 		}
 
-		public int NumBones { get { return bones.Count; } }
-
-		public CoreBone GetBone(string name)
+		internal CoreBone GetBone(string name)
 		{
 			return bones.FirstOrDefault(x => x.Name == name);
 		}
 
-		public CoreBone GetBone(int index)
+		internal CoreBone GetBone(int index)
 		{
 			return index < 0 ? null : bones[index];
 		}
 
-		public IEnumerable<CoreBone> Bones { get { return bones; } }
+		internal IEnumerable<CoreBone> Bones { get { return bones; } }
 	}
 }

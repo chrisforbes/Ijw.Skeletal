@@ -39,7 +39,7 @@ namespace Ijw.Skeletal
 			}
 		}
 
-		public Influence? TransformFor(Bone b)
+		internal Influence? TransformFor(Bone b)
 		{
 			var track = coreAnimation.GetTrack(b.CoreBone);
 

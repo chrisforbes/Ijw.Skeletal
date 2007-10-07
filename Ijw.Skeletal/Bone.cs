@@ -5,7 +5,7 @@ using System;
 
 namespace Ijw.Skeletal
 {
-	public class Bone
+	class Bone
 	{
 		readonly CoreBone coreBone;
 		readonly Skeleton skeleton;
@@ -31,14 +31,14 @@ namespace Ijw.Skeletal
 			}
 		}
 
-		public IEnumerable<Bone> Children
+		internal IEnumerable<Bone> Children
 		{
 			get { return coreBone.Children.Select(x => skeleton.GetBone(x)); }
 		}
 
-		public CoreBone CoreBone { get { return coreBone; } }
+		internal CoreBone CoreBone { get { return coreBone; } }
 
-		public Transform Transform
+		internal Transform Transform
 		{
 			get { return transform; }
 			set
@@ -53,9 +53,9 @@ namespace Ijw.Skeletal
 			}
 		}
 
-		public Matrix Matrix { get { return matrix; } }
+		internal Matrix Matrix { get { return matrix; } }
 
-		public IEnumerable<Vector3> AsLine()
+		internal IEnumerable<Vector3> AsLine()
 		{
 			yield return absTransform.translation;
 

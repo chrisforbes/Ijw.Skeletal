@@ -27,7 +27,7 @@ namespace Ijw.Skeletal
 			tex = t;
 		}
 
-		public Vertex Transform(Matrix m)
+		internal Vertex Transform(Matrix m)
 		{
 			return new Vertex(
 				position.TransformAsCoordinate(m),

@@ -14,16 +14,6 @@ namespace Ijw.Skeletal.Tests
 		const string meshPath = "../../../res/p90.xmf";
 
 		[Test]
-		public void Test1()
-		{
-			var skeleton = new CoreSkeleton(skelPath);
-			Assert.AreEqual(36, skeleton.NumBones);
-
-			Assert.IsNotNull(skeleton.GetBone("Bip01"));
-			Assert.IsNull(skeleton.GetBone("bogus name"));
-		}
-
-		[Test]
 		public void Test2()
 		{
 			var skeleton = new CoreSkeleton(skelPath);

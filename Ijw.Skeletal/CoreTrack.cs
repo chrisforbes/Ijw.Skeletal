@@ -5,7 +5,7 @@ using IjwFramework.Types;
 
 namespace Ijw.Skeletal
 {
-	public class CoreTrack
+	class CoreTrack
 	{
 		readonly CoreBone bone;
 		readonly List<Pair<float, Transform>> keys;

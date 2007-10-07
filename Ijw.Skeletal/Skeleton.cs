@@ -23,12 +23,12 @@ namespace Ijw.Skeletal
 			return bones[bone];
 		}
 
-		public IEnumerable<Bone> RootBones
+		IEnumerable<Bone> RootBones
 		{
 			get { return bones.Values.Where(x => x.CoreBone.Parent == null); }
 		}
 
-		public void VisitBones(Action<Bone> action)
+		void VisitBones(Action<Bone> action)
 		{
 			var open = new Stack<Bone>(RootBones);
 			while (open.Count > 0)
@@ -45,13 +45,12 @@ namespace Ijw.Skeletal
 			VisitBones(x =>
 			{
 				var influences = mixer.GetInfluencesFor(x);
-				//x.Transform = x.CoreBone.Transform;
 				x.Transform = Transform.BlendMany(x.CoreBone.Transform,
 					influences);
 			});
 		}
 
-		public IEnumerable<Bone> Bones { get { return bones.Values; } }
+		internal IEnumerable<Bone> Bones { get { return bones.Values; } }
 
 		public IEnumerable<Vector3> GetBoneLines() { return Bones.SelectMany(x => x.AsLine()); }
 		public IEnumerable<Vector3> GetBonePoints() { return Bones.Select(x => x.Position); }

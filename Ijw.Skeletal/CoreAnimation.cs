@@ -22,7 +22,7 @@ namespace Ijw.Skeletal
 				e => new CoreTrack(e, skeleton)).ToList();
 		}
 
-		public CoreTrack GetTrack(CoreBone bone)
+		internal CoreTrack GetTrack(CoreBone bone)
 		{
 			return tracks.FirstOrDefault(x => x.Bone == bone);
 		}

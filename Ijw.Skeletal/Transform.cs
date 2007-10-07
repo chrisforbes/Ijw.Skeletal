@@ -9,7 +9,7 @@ namespace Ijw.Skeletal
 {
 	using Influence = Pair<float, Transform>;
 
-	public struct Transform
+	struct Transform
 	{
 		public Quaternion rotation;
 		public Vector3 translation;

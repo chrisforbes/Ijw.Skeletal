@@ -33,7 +33,7 @@ namespace Ijw.Skeletal
 			animations.Clear();
 		}
 
-		public IEnumerable<Influence> GetInfluencesFor(Bone b)
+		internal IEnumerable<Influence> GetInfluencesFor(Bone b)
 		{
 			return animations.Select(x => x.TransformFor(b)).
 				Where(x => x != null).
