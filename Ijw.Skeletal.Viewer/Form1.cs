@@ -14,6 +14,7 @@ using Ijw.Math;
 namespace Ijw.Skeletal.Viewer
 {
 	using Math = System.Math;
+	using IjwFramework.Types;
 
 	public class Form1 : Form
 	{
@@ -24,10 +25,10 @@ namespace Ijw.Skeletal.Viewer
 		CoreSkeleton coreSkeleton = new CoreSkeleton("../../../res/skeleton.xsf");
 		Cache<string, CoreMesh> meshes;
 		Cache<string, CoreAnimation> animations;
+		Cache<string, Texture> textures;
 
 		FvfVertexBuffer<Vertex> vertices;
 		IndexBuffer indices;
-		Texture texture;
 
 		Mixer mixer = new Mixer();
 		Skeleton skeleton;
@@ -53,7 +54,8 @@ namespace Ijw.Skeletal.Viewer
 				VertexFormat.Position | VertexFormat.Normal | VertexFormat.Texture);
 			indices = new IndexBuffer(device, 1024);
 
-			texture = Texture.Create(File.OpenRead("../../../res/hax.tga"), device);
+			textures = new Cache<string, Texture>(
+				x => Texture.Create(File.OpenRead("../../../res/" + x), device));
 
 			skeleton = new Skeleton(coreSkeleton);
 
@@ -91,15 +93,20 @@ namespace Ijw.Skeletal.Viewer
 
 			shader.SetValue("viewProjMatrix", view * proj);
 			shader.SetValue("worldMatrix", Matrix.Scale(-1,1,1) * Matrix.RotationX(-(float)Math.PI / 2));
-			shader.SetValue("diffuseTexture", texture);
 
-			string[] mm = { "box01", "p90" };
+			var mm = new Pair<string,string>[]
+			{
+				new Pair<string,string>( "box01", "hax.tga" ),
+				new Pair<string,string>( "p90", "p90-template.tga" )
+			};
 
-			foreach (var m in mm.Select(x => meshes[x]))
+			foreach (var m in mm.Select(x => new { Mesh = meshes[x.First], Texture = textures[x.Second] } ))
 			{
 
-				var v = m.GetTransformedVertices(skeleton);
-				var i = m.GetIndices();
+				var v = m.Mesh.GetTransformedVertices(skeleton);
+				var i = m.Mesh.GetIndices();
+
+				shader.SetValue("diffuseTexture", m.Texture);
 
 				vertices.SetData(v);
 				indices.SetData(i);
