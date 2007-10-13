@@ -103,23 +103,14 @@ namespace Ijw.Skeletal.Viewer
 			shader.SetValue("viewProjMatrix", view * proj);
 			shader.SetValue("worldMatrix", Matrix.Scale(-1,1,1) * Matrix.RotationX(-(float)Math.PI / 2));
 
-			var mm = new Pair<string,string>[]
-			{
-				new Pair<string,string>( "box01", "hax.tga" ),
-				new Pair<string,string>( "p90", "p90-template.tga" )
-			};
+			var mm = new string[] { "box01", "p90" };
 
-			foreach (var m in mm.Select(x => 
-				new 
-				{ 
-					Mesh = meshes[x.First], 
-					Texture = textures[x.Second] 
-				} ))
+			foreach (var m in mm.Select(x => meshes[x]))
 			{
-				var v = m.Mesh.GetTransformedVertices(skeleton);
-				var i = m.Mesh.GetIndices();
+				var v = m.GetTransformedVertices(skeleton);
+				var i = m.GetIndices();
 
-				shader.SetValue("diffuseTexture", m.Texture);
+				shader.SetValue("diffuseTexture", textures[m.TextureName]);
 
 				vertices.SetData(v);
 				indices.SetData(i);
