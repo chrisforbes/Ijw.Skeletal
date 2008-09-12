@@ -58,21 +58,9 @@ namespace Ijw.Skeletal
 
 		public Matrix ToMatrix()
 		{
-			float xx2 = rotation.x * rotation.x * 2;
-			float yy2 = rotation.y * rotation.y * 2;
-			float zz2 = rotation.z * rotation.z * 2;
-			float xy2 = rotation.x * rotation.y * 2;
-			float zw2 = rotation.z * rotation.w * 2;
-			float xz2 = rotation.x * rotation.z * 2;
-			float yw2 = rotation.y * rotation.w * 2;
-			float yz2 = rotation.y * rotation.z * 2;
-			float xw2 = rotation.x * rotation.w * 2;
-
-			return new Matrix(
-				1 - yy2 - zz2, xy2 - zw2, xz2 + yw2, 0,
-				xy2 + zw2, 1 - xx2 - zz2, yz2 - xw2, 0,
-				xz2 - yw2, yz2 + xw2, 1 - xx2 - yy2, 0,
-				translation.x, translation.y, translation.z, 1 );
+			var m = rotation.ToMatrix();
+			m.TranslationVector = translation;
+			return m;
 		}
 	}
 }
